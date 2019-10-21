@@ -1,0 +1,142 @@
+{
+    "anio": 2019,
+    "bisiesto": false,
+    "meses": [
+        {
+            "id": 1,
+            "nombre": "Enero",
+            "feriados": [
+                {
+                    "dia": 1,
+                    "descripcion": "Año Nuevo",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "nombre": "Marzo",
+            "feriados": [
+                {
+                    "dia": 24,
+                    "descripcion": "Día Nacional de la Memoria por la Verdad y la Justicia",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "nombre": "Abril",
+            "feriados": [
+                {
+                    "dia": 2,
+                    "descripcion": "Día del Veterano y de los Caídos en la Guerra de Malvinas",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                },
+                {
+                    "dia": 10,
+                    "descripcion": "Viernes Santo",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "nombre": "Mayo",
+            "feriados": [
+                {
+                    "dia": 1,
+                    "descripcion": "Día del Trabajador",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                },
+                {
+                    "dia": 25,
+                    "descripcion": "Día de la Revolución de Mayo",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "nombre": "Junio",
+            "feriados": [
+                {
+                    "dia": 20,
+                    "descripcion": "Día Paso a la Inmortalidad del General Manuel Belgrano",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "nombre": "Julio",
+            "feriados": [
+                {
+                    "dia": 9,
+                    "descripcion": "Día de la Independencia",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                }
+            ]
+        },
+        {
+            "id": 11,
+            "nombre": "Noviembre",
+            "feriados": [
+                {
+                    "dia": 18,
+                    "descripcion": "Día de la Soberanía Nacional",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "nombre": "Diciembre",
+            "feriados": [
+                {
+                    "dia": 8,
+                    "descripcion": "Inmaculada Concepción de María",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                },
+                {
+                    "dia": 25,
+                    "descripcion": "Navidad",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                }
+            ]
+        }
+    ]
+}

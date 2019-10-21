@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+    <title>Feriados - Infobae</title>
+</head>
+
+<body>
+
+    <span id="loading-icon" class="loading-icon"></span>
+
+    <div class="header">
+        <div class="years">
+            <a id="previous-year" class="year">2018</a>
+            <a id="current-year" class="year">2019</a>
+            <a id="next-year" class="year">2020</a>
+        </div>
+        <div class="descriptions">
+            <ul>
+                <li class="description"><span></span><label>Feriados inamovibles</label></li>
+                <li class="description"><span></span><label>Feriados trasladables</label></li>
+                <li class="description"><span></span><label>Días no laborables</label></li>
+            </ul>
+        </div>
+        <div class="info-card">
+            <div class="next">
+                <span>Próximo feriado en</span>
+                <span class="remaining-days"></span>
+            </div>
+            <div class="next-info">
+                <span class="next-date"></span>
+                <span class="next-description"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="calendar-months">
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script
+        src="https://static.coins.infobae.com/cotizacion-simple/js/dist/iframeResizer.contentWindow.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let currentYear = (new Date()).getFullYear();
+            const params = parseQueryString(window.location.search.replace('?', ''));
+            if (params.year) {
+                getData(params.year);
+                $.each($('.year'), function (i, item) {
+                    if (item.text == params.year) $(item).addClass('active');
+                });
+            } else {
+                getData(currentYear);
+                $.each($('.year'), function (i, item) {
+                    if (item.text == currentYear) $(item).addClass('active');
+                });
+            }
+
+            getDaysLeftUntilNextHoliday();
+
+            $('#previous-year').click(function () {
+                $('.year.active').removeClass('active');
+                $(this).addClass('active');
+                getData(currentYear - 1);
+            });
+
+            $('#current-year').click(function () {
+                $('.year.active').removeClass('active');
+                $(this).addClass('active');
+                getData(currentYear);
+            });
+
+            $('#next-year').click(function () {
+                $('.year.active').removeClass('active');
+                $(this).addClass('active');
+                getData(currentYear + 1);
+            })
+        })
+
+        function getData(year) {
+            $('#loading-icon').show();
+            // $.getJSON('https://feriados-dev.s3.us-east-2.amazonaws.com/feriados-' + year + '.json').done(function (data) {
+            $.getJSON('./feriados-' + year + '.json').done(function (data) {
+                createCalendar(data);
+            });
+        }
+
+        function createCalendar(data) {
+            $('.calendar-months').empty();
+
+            for (let i = 0; i < 12; i++) {
+                let firstDay = (new Date(data.anio, i)).getDay();
+
+                let month = data.meses.find(d => d.id == i + 1);
+
+                var monthContainer = $("<div>", { "class": "month-container" });
+                var monthSection = $("<section>", { "class": "month" });
+                var monthEvents = $("<div>", { "class": "events" });
+                var monthHeader = $("<header><h1>" + getMonthName(i + 1) + "</h1></header>");
+                var monthTable = $("<table>");
+                $(monthTable).append(getMonthTableHeader());
+
+                $(monthHeader).appendTo(monthSection);
+                $(monthTable).appendTo(monthSection);
+                $(monthSection).appendTo(monthContainer);
+                $(monthEvents).appendTo(monthContainer);
+
+                $(monthContainer).appendTo($('.calendar-months'));
+
+                let date = 1;
+                for (let j = 0; j < 6; j++) {
+                    let row = $("<tr>");
+
+                    for (let k = 0; k < 7; k++) {
+                        if (j === 0 && k < firstDay) {
+                            $("<td>").appendTo(row);
+                        } else if (date > daysInMonth(i, data.anio)) {
+                            break;
+                        } else {
+                            if (month) {
+                                let holiday = month.feriados.find(f => f.dia == date);
+                                if (holiday) {
+                                    $(row).append($("<td class='holiday-type-" + holiday.tipo.id + "'>" + date + "</td>"));
+                                    $(monthEvents).append($("<span>" + date + " - " + holiday.descripcion + "</span>"));
+                                } else {
+                                    $(row).append($("<td>" + date + "</td>"));
+                                }
+                            } else {
+                                $(row).append($("<td>" + date + "</td>"));
+                            }
+                            date++;
+                        }
+                    }
+
+                    $(row).appendTo(monthTable);
+                }
+            }
+
+            $('#loading-icon').hide();
+        }
+
+        function getMonthName(id) {
+            switch (id.toString()) {
+                case '1': return 'Enero';
+                case '2': return 'Febrero';
+                case '3': return 'Marzo';
+                case '4': return 'Abril';
+                case '5': return 'Mayo';
+                case '6': return 'Junio';
+                case '7': return 'Julio';
+                case '8': return 'Agosto';
+                case '9': return 'Septiembre';
+                case '10': return 'Octubre';
+                case '11': return 'Noviembre';
+                case '12': return 'Diciembre';
+            }
+        }
+
+        function getMonthTableHeader() {
+            return $(`
+                <tr>
+                    <th>Dom</th>
+                    <th>Lun</th>
+                    <th>Mar</th>
+                    <th>Mie</th>
+                    <th>Jue</th>
+                    <th>Vie</th>
+                    <th>Sab</th>
+                </tr>`);
+        }
+
+        function daysInMonth(iMonth, iYear) {
+            return 32 - new Date(iYear, iMonth, 32).getDate();
+        }
+
+        function getDaysLeftUntilNextHoliday() {
+            // $.getJSON('https://feriados-dev.s3.us-east-2.amazonaws.com/feriados-' + (new Date).getFullYear() + '.json').done(function (data) {
+            $.getJSON('./feriados-' + (new Date).getFullYear() + '.json').done(function (data) {
+                if (!data || !data.meses) return null;
+
+                var today = new Date();
+                let nextHolidayMonth;
+                let nextHolidayDate;
+                let nextHolidayDateDescription;
+
+                for (let i = 0; i < data.meses.length; i++) {
+                    if (data.meses[i].id >= today.getMonth() + 1) {
+                        if (!data.meses[i].feriados) continue;
+                        nextHolidayMonth = data.meses[i].id - 1;
+                        for (let j = 0; j < data.meses[i].feriados.length; j++) {
+                            if (data.meses[i].feriados[j].dia >= today.getDate()) {
+                                nextHolidayDate = data.meses[i].feriados[j].dia;
+                                nextHolidayDateDescription = data.meses[i].feriados[j].descripcion;
+                                break;
+                            }
+                        }
+                        if (nextHolidayDate) break;
+                    }
+                }
+
+                if (!nextHolidayMonth || !nextHolidayDate) return null;
+
+                var end = new Date(data.anio, nextHolidayMonth, nextHolidayDate);
+
+                var diff = (end - today) / (1000 * 60 * 60 * 24);
+
+                $('.info-card .next .remaining-days').text(Math.round(diff) + " días");
+                $('.info-card .next-info .next-date').text(formatDate(end));
+                if (nextHolidayDateDescription) $('.info-card .next-info .next-description').text(nextHolidayDateDescription);
+            });
+        }
+
+        function formatDate(date) {
+            var monthNames = [
+                "Enero", "Febrero", "Marzo",
+                "Abril", "Mayo", "Junio", "Julio",
+                "Augosto", "Septiembre", "Octubre",
+                "Noviembre", "Diciembre"
+            ];
+
+            var weekDays = [
+                "Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado"
+            ];
+
+            var day = date.getDate();
+            var monthIndex = date.getMonth();
+
+            return weekDays[date.getDay()] + ' ' + day + ' de ' + monthNames[monthIndex];
+        }
+
+
+        function parseQueryString(query) {
+            var vars = query.split("&");
+            var query_string = {};
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                var key = decodeURIComponent(pair[0]);
+                var value = decodeURIComponent(pair[1]);
+                // If first entry with this name
+                if (typeof query_string[key] === "undefined") {
+                    query_string[key] = decodeURIComponent(value);
+                    // If second entry with this name
+                } else if (typeof query_string[key] === "string") {
+                    var arr = [query_string[key], decodeURIComponent(value)];
+                    query_string[key] = arr;
+                    // If third or later entry with this name
+                } else {
+                    query_string[key].push(decodeURIComponent(value));
+                }
+            }
+            return query_string;
+        }
+
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            margin: 0;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .loading-icon {
+            width: 50px;
+            height: 50px;
+            background: url('./cargando.png');
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-size: contain;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            -webkit-animation: rotate 1.2s infinite linear;
+            animation: rotate 1.2s infinite linear;
+        }
+
+        @-webkit-keyframes rotate {
+            from {
+                -webkit-transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        a {
+            cursor: pointer;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .header {
+            padding: 0 .5rem;
+        }
+
+        .header .descriptions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header .descriptions ul {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .header .descriptions ul>li {
+            display: inline-block;
+            padding: .25rem;
+        }
+
+        .header .descriptions ul>li>span {
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+            border-radius: 5px;
+            margin-right: 4px;
+        }
+
+        .header .descriptions ul>li>span,
+        .header .descriptions ul>li>label {
+            vertical-align: middle;
+        }
+
+        .header .descriptions ul>li:nth-child(1)>span {
+            background-color: #F68D1D;
+        }
+
+        .header .descriptions ul>li:nth-child(2)>span {
+            background-color: #FCC993;
+        }
+
+        .header .descriptions ul>li:nth-child(3)>span {
+            background-color: #C1C1C1;
+        }
+
+        .header .years {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            color: #292929;
+            font-size: 14px;
+            padding: 1rem 0;
+        }
+
+        .header .years .year {
+            border: 1px solid #454545;
+            border-radius: 5px;
+            padding: .25rem .75rem;
+        }
+
+        .header .years .year.active {
+            color: #F68E01;
+            border: 1px solid #F68E01;
+            border-radius: 5px;
+            padding: .25rem .75rem;
+        }
+
+        .header .info-card {
+            background-color: #fff;
+            box-shadow: 0px 0px 8px #00000029;
+            border-top: 3px solid #F68E01;
+            margin: 1rem 0;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            min-height: 98px;
+            padding: .65rem;
+            font-size: 16px;
+        }
+
+        .header .info-card .next,
+        .header .info-card .next-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex: 1;
+        }
+
+        .header .info-card .next-info .next-date,
+        .header .info-card .next .remaining-days,
+        .header .info-card .next-info .next-description {
+            font-weight: bold;
+        }
+
+        .header .info-card .next-info .next-date,
+        .header .info-card .next-info .next-description {
+            text-align: right;
+        }
+
+        .header .info-card .next .remaining-days {
+            color: #F68D1D;
+            font-size: 40px;
+        }
+
+        .header .info-card .next-info .next-description {
+            color: #F68D1D;
+            font-size: 18px;
+        }
+
+        .calendar-months {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .calendar-months .month-container {
+            width: 300px;
+            margin: 1rem .65rem;
+        }
+
+        .month-container .events>span {
+            display: block;
+            padding: .5rem 0;
+        }
+
+        .month header h1 {
+            text-align: center;
+            font-size: 18px;
+            color: #000;
+            font-weight: bold;
+            margin: .25rem 0;
+        }
+
+        .month table {
+            width: 100%;
+            text-align: center;
+        }
+
+        .month table {
+            width: 100%;
+            text-align: center;
+            font-size: 16px;
+            border-spacing: 0;
+        }
+
+        .month table th,
+        .month table td {
+            padding: .25rem;
+        }
+
+        .month table tr:nth-child(odd) {
+            background-color: #F8F8F8;
+        }
+
+        .holiday-type-1 {
+            background-color: #F68E01;
+            color: #fff;
+        }
+
+        .holiday-type-2 {
+            background-color: #FCC993;
+            color: #fff;
+        }
+
+        .holiday-type-3 {
+            background-color: #C1C1C1;
+            color: #fff;
+        }
+
+        @media (min-width: 768px) {
+            .calendar-months {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-around;
+                align-items: flex-start;
+            }
+
+            .header {
+                display: grid;
+                grid-template-columns: repeat(12, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+                padding: 0;
+            }
+
+            .header .years {
+                grid-column: 1 / span 7;
+                grid-row: 1;
+                justify-content: flex-start;
+            }
+
+            .header .descriptions {
+                grid-column: 1 / span 7;
+                grid-row: 2;
+                justify-content: flex-start;
+            }
+
+            .header .descriptions .description,
+            .header .years .year {
+                margin: 0 1rem;
+            }
+
+            .header .info-card {
+                grid-column: 8 / span 5;
+                grid-row: 1 / span 2;
+            }
+        }
+
+        @media (min-width: 390px) and (max-width: 540px) {
+            .header .descriptions ul {
+                justify-content: center;
+            }
+        }
+    </style>
+</body>
+
+</html>

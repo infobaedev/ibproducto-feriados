@@ -1,0 +1,218 @@
+{
+    "anio": 2019,
+    "bisiesto": false,
+    "meses": [
+        {
+            "id": 1,
+            "nombre": "Enero",
+            "feriados": [
+                {
+                    "dia": 1,
+                    "descripcion": "Año Nuevo",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "nombre": "Marzo",
+            "feriados": [
+                {
+                    "dia": 4,
+                    "descripcion": "Carnaval",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                },
+                {
+                    "dia": 5,
+                    "descripcion": "Carnaval",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                },
+                {
+                    "dia": 24,
+                    "descripcion": "Día Nacional de la Memoria por la Verdad y la Justicia",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "nombre": "Abril",
+            "feriados": [
+                {
+                    "dia": 2,
+                    "descripcion": "Día del Veterano y de los Caídos en la Guerra de Malvinas",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                },
+                {
+                    "dia": 19,
+                    "descripcion": "Viernes Santo",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "nombre": "Mayo",
+            "feriados": [
+                {
+                    "dia": 1,
+                    "descripcion": "Día del Trabajador",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                },
+                {
+                    "dia": 25,
+                    "descripcion": "Día de la Revolución de Mayo",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "nombre": "Junio",
+            "feriados": [
+                {
+                    "dia": 17,
+                    "descripcion": "Día Paso a la Inmortalidad del General Martín Miguel de Güemes",
+                    "tipo": {
+                        "id": 2,
+                        "descripcion": "Feriado Trasladable"
+                    }
+                },
+                {
+                    "dia": 20,
+                    "descripcion": "Día Paso a la Inmortalidad del General Manuel Belgrano",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "nombre": "Julio",
+            "feriados": [
+                {
+                    "dia": 8,
+                    "descripcion": "Feriado Puente Turístico",
+                    "tipo": {
+                        "id": 2,
+                        "descripcion": "Día No Laborable"
+                    }
+                },
+                {
+                    "dia": 9,
+                    "descripcion": "Día de la Independencia",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "nombre": "Agosto",
+            "feriados": [
+                {
+                    "dia": 17,
+                    "descripcion": "Paso a la Inmortalidad del General José de San Martín",
+                    "tipo": {
+                        "id": 2,
+                        "descripcion": "Feriado Trasladable"
+                    }
+                },
+                {
+                    "dia": 19,
+                    "descripcion": "Feriado Puente Turístico",
+                    "tipo": {
+                        "id": 3,
+                        "descripcion": "Día No Laborable"
+                    }
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "nombre": "Octubre",
+            "feriados": [
+                {
+                    "dia": 12,
+                    "descripcion": "Día del Respeto a la Diversidad Cultural",
+                    "tipo": {
+                        "id": 2,
+                        "descripcion": "Feriado Trasladable"
+                    }
+                },
+                {
+                    "dia": 14,
+                    "descripcion": "Feriado Puente Turístico",
+                    "tipo": {
+                        "id": 3,
+                        "descripcion": "Día No Laborable"
+                    }
+                }
+            ]
+        },
+        {
+            "id": 11,
+            "nombre": "Noviembre",
+            "feriados": [
+                {
+                    "dia": 18,
+                    "descripcion": "Día de la Soberanía Nacional",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "nombre": "Diciembre",
+            "feriados": [
+                {
+                    "dia": 8,
+                    "descripcion": "Inmaculada Concepción de María",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                },
+                {
+                    "dia": 25,
+                    "descripcion": "Navidad",
+                    "tipo": {
+                        "id": 1,
+                        "descripcion": "Feriado Inamovible"
+                    }
+                }
+            ]
+        }
+    ]
+}

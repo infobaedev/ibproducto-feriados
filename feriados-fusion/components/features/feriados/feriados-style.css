@@ -1,0 +1,214 @@
+a {
+    cursor: pointer;
+}
+
+h1 {
+    margin: 0;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.header {
+    padding: 0 .5rem;
+}
+
+.header .descriptions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header .descriptions ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.header .descriptions ul>li {
+    display: inline-block;
+    padding: .25rem;
+}
+
+.header .descriptions ul>li>span {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    border-radius: 5px;
+    margin-right: 4px;
+}
+
+.header .descriptions ul>li>span, .header .descriptions ul>li>label {
+    vertical-align: middle;
+}
+
+.header .descriptions ul>li:nth-child(1)>span {
+    background-color: #F68D1D;
+}
+
+.header .descriptions ul>li:nth-child(2)>span {
+    background-color: #FCC993;
+}
+
+.header .descriptions ul>li:nth-child(3)>span {
+    background-color: #C1C1C1;
+}
+
+.header .years {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    color: #292929;
+    font-size: 14px;
+    padding: 1rem 0;
+}
+
+.header .years .year {
+    border: 1px solid #454545;
+    border-radius: 5px;
+    padding: .25rem .75rem;
+}
+
+.header .years .year.active {
+    color: #F68E01;
+    border: 1px solid #F68E01;
+    border-radius: 5px;
+    padding: .25rem .75rem;
+}
+
+.header .info-card {
+    background-color: #fff;
+    box-shadow: 0px 0px 8px #00000029;
+    border-top: 3px solid #F68E01;
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: .65rem;
+    font-size: 16px;
+}
+
+.header .info-card .next, .header .info-card .next-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.header .info-card .next-info .next-date, .header .info-card .next .remaining-days, .header .info-card .next-info .next-description {
+    font-weight: bold;
+}
+
+.header .info-card .next-info .next-date, .header .info-card .next-info .next-description {
+    text-align: right;
+}
+
+.header .info-card .next .remaining-days {
+    color: #F68D1D;
+    font-size: 40px;
+}
+
+.header .info-card .next-info .next-description {
+    color: #F68D1D;
+    font-size: 18px;
+}
+
+.calendar-months {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.calendar-months .month-container {
+    width: 300px;
+    margin: 1rem .65rem;
+}
+
+.month-container .events>span {
+    display: block;
+    padding: .5rem 0;
+}
+
+.month header h1 {
+    text-align: center;
+    font-size: 18px;
+    color: #000;
+    font-weight: bold;
+    margin: .25rem 0;
+}
+
+.month table {
+    width: 100%;
+    text-align: center;
+}
+
+.month table {
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    border-spacing: 0;
+}
+
+.month table th, .month table td {
+    padding: .25rem;
+}
+
+.month table tr:nth-child(odd) {
+    background-color: #F8F8F8;
+}
+
+.holiday-type-1 {
+    background-color: #F68E01;
+    color: #fff;
+}
+
+.holiday-type-2 {
+    background-color: #FCC993;
+    color: #fff;
+}
+
+.holiday-type-3 {
+    background-color: #C1C1C1;
+    color: #fff;
+}
+
+@media (min-width: 768px) {
+    .calendar-months {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: flex-start;
+    }
+    .header {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        padding: 0;
+    }
+    .header .years {
+        grid-column: 1 / span 7;
+        grid-row: 1;
+        justify-content: flex-start;
+    }
+    .header .descriptions {
+        grid-column: 1 / span 7;
+        grid-row: 2;
+        justify-content: flex-start;
+    }
+    .header .descriptions .description, .header .years .year {
+        margin: 0 1rem;
+    }
+    .header .info-card {
+        grid-column: 8 / span 5;
+        grid-row: 1 / span 2;
+    }
+}
+
+@media (min-width: 390px) and (max-width: 540px) {
+    .header .descriptions ul {
+        justify-content: center;
+    }
+}
